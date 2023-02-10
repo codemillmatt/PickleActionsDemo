@@ -1,0 +1,22 @@
+# github action to deploy munsonpickles api to azure
+
+name: Deploy Munson Pickles API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+        
+      - name: Install dependencies
+        run: dotnet restore ./MunsonPickles.Api/MunsonPickles.Api.csproj
+
+      - name: Build
+        run: dotnet build ./MunsonPickles.Api/MunsonPickles.Api.csproj --configuration Release --no-restore
